@@ -1,1 +1,110 @@
-<p>signup works!</p>
+<div class="flex md:justify-content-center md:align-items-center align-content-center" style="height: 100vh">
+  <div class="surface-card p-4 shadow-2 border-round w-full lg:w-3">
+    <div class="text-center mb-5">
+      <div class="pi pi-user mb-3" alt="Image" style="font-size: 2.5rem"></div>
+      <div class="text-900 text-3xl font-medium mb-3">Hello User</div>
+      <span class="text-600 font-medium line-height-3">Already have an account?</span>
+      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer hover:underline" routerLink="/login">Sign
+        In</a>
+    </div>
+
+    <form [formGroup]="registerForm" class="flex flex-col items-center w-full">
+      <div class="w-full max-w-md">
+        <div class="mb-5 w-full">
+          <div class="p-field p-float-label p-input-icon-left w-full" [ngClass]="{
+              'p-error': name?.invalid && (name?.dirty || name?.touched)
+            }">
+            <i [ngClass]="{
+                'pi pi-user': true,
+                'p-error': name?.invalid && (name?.dirty || name?.touched)
+              }"></i>
+            <input id="name" type="text" pInputText formControlName="name" class="w-full" />
+            <label for="name" [ngClass]="{
+                'p-error': name?.invalid && (name?.dirty || name?.touched)
+              }">Name</label>
+          </div>
+          <small *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="block p-error">
+            <div *ngIf="name?.errors?.['required']">Name is Required</div>
+            <div *ngIf="name?.errors?.['pattern']">Name should be Valid</div>
+          </small>
+        </div>
+
+        <div class="mb-5 w-full">
+          <div class="p-field p-float-label p-input-icon-left w-full" [ngClass]="{
+              'p-error': email?.invalid && (email?.dirty || email?.touched)
+            }">
+            <i [ngClass]="{
+                'pi pi-at': true,
+                'p-error': email?.invalid && (email?.dirty || email?.touched)
+              }"></i>
+            <input id="email" type="email" pInputText formControlName="email" class="w-full" />
+            <label for="email" [ngClass]="{
+                'p-error': email?.invalid && (email?.dirty || email?.touched)
+              }">Email</label>
+          </div>
+          <small *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="block p-error">
+            <div *ngIf="email?.errors?.['required']">Email is Required</div>
+            <div *ngIf="email?.errors?.['email']">
+              Email should be Valid like- something&#64;gmail.com
+            </div>
+          </small>
+        </div>
+
+        <div class="mb-5 w-full">
+          <div class="p-field p-float-label p-input-icon-left p-password p-password-info w-full" 
+               [ngClass]="{'p-error': password?.invalid && (password?.dirty || password?.touched)}">
+            <i [ngClass]="{'pi pi-lock': true, 'p-error': password?.invalid && (password?.dirty || password?.touched)}"></i>
+            <p-password id="password" type="password" 
+                        [inputStyle]="{'width': '100%', 'border-color': (password?.invalid && (password?.dirty || password?.touched)) ? 'red' : ''}" 
+                        [style]="{'width': '100%'}"
+                        formControlName="password" class="w-full" 
+                        [toggleMask]="true" [feedback]="true"></p-password>
+            <label for="password" [ngClass]="{'p-error': password?.invalid && (password?.dirty || password?.touched)}">Password</label>
+          </div>
+          <small *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="block p-error">
+            <div *ngIf="password?.errors?.['required']">Password is required</div>
+            <div *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters long</div>
+          </small>
+        </div>
+        
+
+        <div class="mb-5 w-full">
+          <div class="p-field p-float-label p-input-icon-left p-password p-password-info w-full" 
+               [ngClass]="{'p-error': confirmpassword?.invalid && (confirmpassword?.dirty || confirmpassword?.touched)}">
+            <i [ngClass]="{'pi pi-lock': true, 'p-error': confirmpassword?.invalid && (confirmpassword?.dirty || confirmpassword?.touched)}"></i>
+            <p-password id="confirmpassword" type="password" 
+                        [inputStyle]="{'width': '100%', 'border-color': (confirmpassword?.invalid && (confirmpassword?.dirty || confirmpassword?.touched)) ? 'red' : ''}" 
+                        [style]="{'width': '100%'}"
+                        formControlName="confirmpassword" class="w-full" 
+                        [toggleMask]="true" [feedback]="true"></p-password>
+            <label for="confirmpassword" [ngClass]="{'p-error': confirmpassword?.invalid && (confirmpassword?.dirty || confirmpassword?.touched)}">Confirm Password</label>
+          </div>
+          <small *ngIf="confirmpassword?.invalid && (confirmpassword?.dirty || confirmpassword?.touched)" class="block p-error">
+            <div *ngIf="confirmpassword?.errors?.['required']">Confirm Password is required</div>
+            <div *ngIf="password?.errors?.['minlength']">Confirm Password must be at least 6 characters long</div>
+          </small>
+        </div>
+
+        <div class="flex items-center justify-between mb-6 w-full">
+          <div class="flex items-center">
+            <p-checkbox id="rememberme1" [binary]="true" styleClass="mr-2"></p-checkbox>
+            <label for="rememberme1" class="text-900">
+              Agree on
+              <span class="text-blue-500 hover:underline cursor-pointer" (click)="showTerms = true">Terms & Conditions.</span>
+            </label>
+          </div>
+          <a class="md:text-right sm:text-right font-medium no-underline text-blue-500 cursor-pointer hover:underline">Forgot password?</a>
+        </div>
+        
+        <p-dialog header="Terms & Conditions" [(visible)]="showTerms" [modal]="true" [closable]="true" [draggable]="false" [resizable]="false" styleClass="w-full md:w-1/2">
+          <p>
+            These are the terms and conditions...
+          </p>
+        </p-dialog>
+        
+
+        <button pButton pRipple label="Sign Up" icon="pi pi-user" class="w-full" (click)="onSubmit()"></button>
+      </div>
+    </form>
+  </div>
+</div>
