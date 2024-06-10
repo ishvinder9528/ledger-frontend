@@ -51,7 +51,7 @@ export class NavbarComponent {
       this.router.navigate(['/signup']);
   } },
   ];
-  _id: any = 'veeresh';
+  _id: any = 'hatif';
   image: string = `https://i.pravatar.cc/300?u=${this._id}`;
   currentRoute: any;
 }

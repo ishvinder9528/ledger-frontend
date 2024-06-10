@@ -11,7 +11,10 @@
         <i class="pi pi-times"></i>
     </a>
 </div> -->
+@if(!checkBE){
 
+<app-loader></app-loader>
+}@else {
 <div class="grid grid-nogutter surface-section text-800">
   <div
     class="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center"
@@ -43,12 +46,17 @@
       ></button>
     </section>
   </div>
-  <div class="col-12 md:col-6  overflow-hidden hidden md:block"style="height: 100vh">
+  <div
+    class="col-12 md:col-6 overflow-hidden hidden md:block"
+    style="height: 100vh"
+  >
     <img
       src="https://res.cloudinary.com/diiyyfb8t/image/upload/e_improve:outdoor/ledger_home_bg.jpg"
       alt="Image"
       class="md:ml-auto block md:h-full image"
       style="clip-path: polygon(8% 0, 100% 0%, 100% 100%, 0 100%)"
-      />
+    />
   </div>
 </div>
+
+}

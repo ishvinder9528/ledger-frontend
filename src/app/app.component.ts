@@ -14,6 +14,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { TooltipModule } from 'primeng/tooltip';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -30,7 +31,7 @@ import { TooltipModule } from 'primeng/tooltip';
     PageNotFoundComponent,
     NavbarComponent,
     TooltipModule,
-    RouterModule
+    RouterModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
