@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AnimateModule } from 'primeng/animate';
 import { ButtonModule } from 'primeng/button';
@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { DialogModule } from 'primeng/dialog';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'app-signup',
@@ -37,20 +38,39 @@ import { DialogModule } from 'primeng/dialog';
     IconFieldModule,
     InputIconModule,
     DialogModule,
+    CardModule
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
 export class SignupComponent {
-  
   registerForm = this.fb.group({
     name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(6)]],
-    confirmpassword: ['', [Validators.required, Validators.minLength(6)]],
-  });
+    password: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.pattern(/.*[a-z].*/),
+        Validators.pattern(/.*[A-Z].*/),
+        Validators.pattern(/.*\d.*/),
+      ],
+    ],
+    confirmpassword: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.pattern(/.*[a-z].*/),
+        Validators.pattern(/.*[A-Z].*/),
+        Validators.pattern(/.*\d.*/),
+      ],
+    ],
+    terms: [false, Validators.requiredTrue],
+  },{Validators:this.passwordMatchValidator});
 
-value:any
+  value: any;
 
   constructor(private fb: FormBuilder) {}
 
@@ -70,13 +90,49 @@ value:any
     return this.registerForm.get('confirmpassword');
   }
 
+  get terms() {
+    return this.registerForm.get('terms');
+  }
+
   onSubmit() {
     console.log(this.registerForm.value);
   }
 
-  showTerms:boolean=false
+  showTerms: boolean = false;
 
   showDialog() {
     this.showTerms = true;
-}
+  }
+
+  hasLowercase() {
+    return /[a-z]/.test(this.registerForm.get('password')?.value ?? '');
+  }
+
+  hasUppercase() {
+    return /[A-Z]/.test(this.registerForm.get('password')?.value ?? '');
+  }
+
+  hasNumeric() {
+    return /\d/.test(this.registerForm.get('password')?.value ?? '');
+  }
+
+  isMinLength() {
+    const length: any = this.registerForm.get('password')?.value?.length ?? 0;
+    return length >= 6;
+  }
+
+  passwordMatchValidator(form:any) {
+  
+    const password = this.registerForm.get('password');
+    const confirmPassword = this.registerForm.get('confirmpassword');
+  
+    console.log("password:",password);
+    
+    if (!password || !confirmPassword) {
+      return null;
+    }
+  
+    return password.value === confirmPassword.value ? null : { mismatch: true };
+  }
+
 }

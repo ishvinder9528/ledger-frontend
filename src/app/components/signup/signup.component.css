@@ -6,11 +6,5 @@
 }
 
 .p-input-icon-left i {
-  z-index: 2;
-}
-
-.p-dialog {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
+  z-index: 1;
 }
