@@ -21,7 +21,11 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { DialogModule } from 'primeng/dialog';
 import { CardModule } from 'primeng/card';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpResponse,
+} from '@angular/common/http';
 import { SignupService } from '../../../services/auth/signup/signup.service';
 
 @Component({
@@ -45,7 +49,6 @@ import { SignupService } from '../../../services/auth/signup/signup.service';
     IconFieldModule,
     InputIconModule,
     DialogModule,
-    CardModule,
     HttpClientModule,
   ],
   templateUrl: './signup.component.html',
@@ -54,8 +57,8 @@ import { SignupService } from '../../../services/auth/signup/signup.service';
 export class SignupComponent {
   constructor(
     private fb: FormBuilder,
-    private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router
   ) {}
 
   registerForm = this.fb.group({
@@ -106,23 +109,18 @@ export class SignupComponent {
     return this.registerForm.get('terms');
   }
 
-  onSubmit(e: Event) {
-    e.preventDefault();
-    if (this.registerForm.valid) {
-      console.log(this.registerForm.value);
-      const signUp = new SignupService(this.http);
-      signUp.signup(this.registerForm.value).subscribe({
-        next: (data: any) => {
-          console.log('data:', data);
-        },
-        error: (error: any) => {
-          console.error('An error occurred:', error);
-        },
-      })
-      this.router.navigate(['/verify'], { replaceUrl: true });
-    } else {
-      this.registerForm.markAllAsTouched();
-    }
+  onSubmit() {
+    console.log(this.registerForm.value);
+    const signup = new SignupService(this.http);
+    signup.signup(this.registerForm.value).subscribe({
+      next: (data: any) => {
+        console.log('data:', data);
+        this.router.navigate(['/verify']);
+      },
+      error: (error: any) => {
+        console.error('An error occurred:', error);
+      },
+    });
   }
 
   showTerms: boolean = false;

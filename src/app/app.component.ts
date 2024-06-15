@@ -9,8 +9,6 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
 import { StyleClassModule } from 'primeng/styleclass';
-import { HomeComponent } from './components/home/home.component';
-import { SignupComponent } from './components/signup/signup.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { TooltipModule } from 'primeng/tooltip';
@@ -26,8 +24,6 @@ import { HttpClientModule } from '@angular/common/http';
     ButtonModule,
     ImageModule,
     StyleClassModule,
-    HomeComponent,
-    SignupComponent,
     PageNotFoundComponent,
     NavbarComponent,
     TooltipModule,
