@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { AnimateModule } from 'primeng/animate';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -45,12 +46,17 @@ import { SignupService } from '../../services/auth/signup/signup.service';
     IconFieldModule,
     InputIconModule,
     DialogModule,
+    HttpClientModule,
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
 export class SignupComponent {
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   registerForm = this.fb.group({
     name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
@@ -102,6 +108,16 @@ export class SignupComponent {
 
   onSubmit() {
     console.log(this.registerForm.value);
+    const signup = new SignupService(this.http);
+    signup.signup(this.registerForm.value).subscribe({
+      next: (data: any) => {
+        console.log('data:', data);
+        this.router.navigate(['/verify']);
+      },
+      error: (error: any) => {
+        console.error('An error occurred:', error);
+      },
+    });
   }
 
   showTerms: boolean = false;

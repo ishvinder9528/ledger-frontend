@@ -77,14 +77,7 @@
 
   <ng-template pTemplate="end">
     <div class="flex align-items-center gap-2">
-      <ng-container
-        *ngIf="
-          currentRoute === '/home' ||
-            currentRoute === '/login' ||
-            currentRoute === '/signup';
-          else loggedInTemplate
-        "
-      >
+      <ng-container *ngIf="!cookieValue; else loggedInTemplate">
         <button
           pButton
           pRipple
@@ -108,9 +101,13 @@
           pInputText
           placeholder="Search"
           class="w-8rem sm:w-auto"
-        /> 
+        />
         <p-menu #menu [model]="logoutItem" [popup]="true" />
-        <p-avatar [image]="image" shape="circle" (click)="menu.toggle($event)"></p-avatar>
+        <p-avatar
+          [image]="image"
+          shape="circle"
+          (click)="menu.toggle($event)"
+        ></p-avatar>
       </ng-template>
     </div>
   </ng-template>
