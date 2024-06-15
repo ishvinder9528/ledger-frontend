@@ -1,0 +1,13 @@
+.p-error {
+  color: red;
+}
+.p-field.p-error .p-inputtext {
+  border-color: red !important;
+}
+
+.p-input-icon-left i {
+  z-index: 1;
+}
+.p-password input {
+  padding-left: 2.5rem !important;
+}
