@@ -108,8 +108,9 @@
           pInputText
           placeholder="Search"
           class="w-8rem sm:w-auto"
-        />
-        <p-avatar [image]="image" shape="circle"></p-avatar>
+        /> 
+        <p-menu #menu [model]="logoutItem" [popup]="true" />
+        <p-avatar [image]="image" shape="circle" (click)="menu.toggle($event)"></p-avatar>
       </ng-template>
     </div>
   </ng-template>

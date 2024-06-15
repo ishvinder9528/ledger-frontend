@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  Validators,
+} from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { AnimateModule } from 'primeng/animate';
 import { ButtonModule } from 'primeng/button';
@@ -16,6 +21,8 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { DialogModule } from 'primeng/dialog';
 import { CardModule } from 'primeng/card';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { SignupService } from '../../services/auth/signup/signup.service';
 
 @Component({
   selector: 'app-signup',
@@ -38,12 +45,13 @@ import { CardModule } from 'primeng/card';
     IconFieldModule,
     InputIconModule,
     DialogModule,
-    CardModule
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
 export class SignupComponent {
+  constructor(private fb: FormBuilder) {}
+
   registerForm = this.fb.group({
     name: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
     email: ['', [Validators.required, Validators.email]],
@@ -68,11 +76,9 @@ export class SignupComponent {
       ],
     ],
     terms: [false, Validators.requiredTrue],
-  },{Validators:this.passwordMatchValidator});
+  });
 
   value: any;
-
-  constructor(private fb: FormBuilder) {}
 
   get name() {
     return this.registerForm.get('name');
@@ -120,19 +126,4 @@ export class SignupComponent {
     const length: any = this.registerForm.get('password')?.value?.length ?? 0;
     return length >= 6;
   }
-
-  passwordMatchValidator(form:any) {
-  
-    const password = this.registerForm.get('password');
-    const confirmPassword = this.registerForm.get('confirmpassword');
-  
-    console.log("password:",password);
-    
-    if (!password || !confirmPassword) {
-      return null;
-    }
-  
-    return password.value === confirmPassword.value ? null : { mismatch: true };
-  }
-
 }

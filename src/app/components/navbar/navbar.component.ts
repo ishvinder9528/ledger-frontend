@@ -9,7 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenubarModule } from 'primeng/menubar';
 import { RippleModule } from 'primeng/ripple';
-
+import { OverlayPanelModule } from 'primeng/overlaypanel';import { MenuModule } from 'primeng/menu';
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -22,6 +22,8 @@ import { RippleModule } from 'primeng/ripple';
     InputTextModule,
     RippleModule,
     ButtonModule,
+    OverlayPanelModule,
+    MenuModule
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
@@ -44,14 +46,43 @@ export class NavbarComponent {
         this.router.navigate(['/home']);
       },
     },
-    { icon: 'pi pi-info', label: 'About',  command: () => {
-      this.router.navigate(['/about']);
-  } },
-    { icon: 'pi pi-user', label: 'Login/Register',   command: () => {
-      this.router.navigate(['/signup']);
-  } },
+    {
+      icon: 'pi pi-info',
+      label: 'About',
+      command: () => {
+        this.router.navigate(['/about']);
+      },
+    },
+    {
+      icon: 'pi pi-user',
+      label: 'Login/Register',
+      command: () => {
+        this.router.navigate(['/signup']);
+      },
+    },
   ];
-  _id: any = 'hatif';
-  image: string = `https://i.pravatar.cc/300?u=${this._id}`;
+
+  logoutItem: MenuItem[] = [
+    {
+      icon: 'pi pi-user',
+      label: 'Profile',
+      command: () => {
+        this.router.navigate(['/profile']);
+      },
+    },    {
+      icon: 'pi pi-sign-out',
+      label: 'Logout',
+      command: () => {
+        this.router.navigate(['/login']);
+      },
+    },
+  ];
+
+  _id: any = 'test';
+  image: string = `https://avatar.iran.liara.run/public?username=${this._id}`;
   currentRoute: any;
+  showMenu: boolean = false;
+  logout() {
+    this.router.navigate(['/login']);
+  }
 }

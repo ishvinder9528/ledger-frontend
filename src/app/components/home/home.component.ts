@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { StyleClassModule } from 'primeng/styleclass';
-import { SignupService } from '../../services/auth/signup.service';
+import { SignupService } from '../../services/auth/signup/signup.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from '../../helpers/loader/loader.component';
 import { ToastModule } from 'primeng/toast';

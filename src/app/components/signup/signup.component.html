@@ -1,19 +1,27 @@
-<div class="flex justify-center align-items-center h-screen">
+<div class="flex md:justify-content-center md:align-items-center align-content-center" style="height: 100vh">
   <div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
     <div class="text-center mb-5">
-      <i class="pi pi-user mb-3" style="font-size: 2.5rem"></i>
+      <div class="pi pi-user mb-3" alt="Image" style="font-size: 2.5rem"></div>
       <div class="text-900 text-3xl font-medium mb-3">Hello User</div>
       <span class="text-600 font-medium line-height-3">Already have an account?</span>
-      <a routerLink="/login" class="font-medium no-underline ml-2 text-blue-500 cursor-pointer hover:underline">Sign In</a>
+      <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer hover:underline" routerLink="/login">Sign
+        In</a>
     </div>
 
     <form [formGroup]="registerForm" class="flex flex-col items-center w-full">
       <div class="w-full max-w-md">
-        <div class="mb-5">
-          <div class="p-field p-float-label p-input-icon-left w-full" [ngClass]="{ 'p-error': name?.invalid && (name?.dirty || name?.touched) }">
-            <i class="pi pi-user" [ngClass]="{ 'p-error': name?.invalid && (name?.dirty || name?.touched) }"></i>
+        <div class="mb-5 w-full">
+          <div class="p-field p-float-label p-input-icon-left w-full" [ngClass]="{
+              'p-error': name?.invalid && (name?.dirty || name?.touched)
+            }">
+            <i [ngClass]="{
+                'pi pi-user': true,
+                'p-error': name?.invalid && (name?.dirty || name?.touched)
+              }"></i>
             <input id="name" type="text" pInputText formControlName="name" class="w-full" />
-            <label for="name" [ngClass]="{ 'p-error': name?.invalid && (name?.dirty || name?.touched) }">Name</label>
+            <label for="name" [ngClass]="{
+                'p-error': name?.invalid && (name?.dirty || name?.touched)
+              }">Name</label>
           </div>
           <small *ngIf="name?.invalid && (name?.dirty || name?.touched)" class="block p-error">
             <div *ngIf="name?.errors?.['required']">Name is Required</div>
@@ -21,62 +29,132 @@
           </small>
         </div>
 
-        <div class="mb-5">
-          <div class="p-field p-float-label p-input-icon-left w-full" [ngClass]="{ 'p-error': email?.invalid && (email?.dirty || email?.touched) }">
-            <i class="pi pi-at" [ngClass]="{ 'p-error': email?.invalid && (email?.dirty || email?.touched) }"></i>
+        <div class="mb-5 w-full">
+          <div class="p-field p-float-label p-input-icon-left w-full" [ngClass]="{
+              'p-error': email?.invalid && (email?.dirty || email?.touched)
+            }">
+            <i [ngClass]="{
+                'pi pi-at': true,
+                'p-error': email?.invalid && (email?.dirty || email?.touched)
+              }"></i>
             <input id="email" type="email" pInputText formControlName="email" class="w-full" />
-            <label for="email" [ngClass]="{ 'p-error': email?.invalid && (email?.dirty || email?.touched) }">Email</label>
+            <label for="email" [ngClass]="{
+                'p-error': email?.invalid && (email?.dirty || email?.touched)
+              }">Email</label>
           </div>
           <small *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="block p-error">
             <div *ngIf="email?.errors?.['required']">Email is Required</div>
-            <div *ngIf="email?.errors?.['email']">Email should be Valid like- something&#64;gmail.com</div>
+            <div *ngIf="email?.errors?.['email']">
+              Email should be Valid like- something&#64;gmail.com
+            </div>
           </small>
         </div>
 
-        <div class="mb-5">
-          <div class="p-field p-float-label p-input-icon-left p-password p-password-info w-full" [ngClass]="{ 'p-error': password?.invalid && (password?.dirty || password?.touched) }">
-            <i class="pi pi-lock" [ngClass]="{ 'p-error': password?.invalid && (password?.dirty || password?.touched) }"></i>
-            <p-password id="password" formControlName="password" [toggleMask]="true" [feedback]="true" [inputStyle]="{ paddingLeft:'2.5rem',width: '100%', 'border-color': password?.invalid && (password?.dirty || password?.touched) ? 'red' : '' }"  [style]="{ width: '100%' }" class="w-full">
+        <div class="mb-5 w-full">
+          <div class="p-field p-float-label p-input-icon-left p-password p-password-info w-full" [ngClass]="{
+              'p-error':
+                password?.invalid && (password?.dirty || password?.touched)
+            }">
+            <i [ngClass]="{
+                'pi pi-lock': true,
+                'p-error':
+                  password?.invalid && (password?.dirty || password?.touched)
+              }"></i>
+            <p-password id="password" type="password" [inputStyle]="{
+              paddingLeft:'2.5rem',
+                width: '100%',
+                'border-color':
+                  password?.invalid && (password?.dirty || password?.touched)
+                    ? 'red'
+                    : ''
+              }" [style]="{ width: '100%' }" formControlName="password" class="w-full" [toggleMask]="true"
+              [feedback]="true">
               <ng-template pTemplate="header">
                 <h4>Pick a password</h4>
               </ng-template>
               <ng-template pTemplate="footer">
-                <p-divider></p-divider>
+                <p-divider />
                 <p class="mt-2">Suggestions</p>
                 <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
-                  <li [style.color]="hasLowercase() ? 'green' : 'red'">At least one lowercase</li>
-                  <li [style.color]="hasUppercase() ? 'green' : 'red'">At least one uppercase</li>
-                  <li [style.color]="hasNumeric() ? 'green' : 'red'">At least one numeric</li>
-                  <li [style.color]="isMinLength() ? 'green' : 'red'">Minimum 6 characters</li>
+                  <li [style.color]="hasLowercase() ? 'green' : 'red'">
+                    At least one lowercase
+                  </li>
+                  <li [style.color]="hasUppercase() ? 'green' : 'red'">
+                    At least one uppercase
+                  </li>
+                  <li [style.color]="hasNumeric() ? 'green' : 'red'">
+                    At least one numeric
+                  </li>
+                  <li [style.color]="isMinLength() ? 'green' : 'red'">
+                    Minimum 6 characters
+                  </li>
                 </ul>
-              </ng-template>
-            </p-password>
-            <label for="password" [ngClass]="{ 'p-error': password?.invalid && (password?.dirty || password?.touched) }">Password</label>
+              </ng-template></p-password>
+            <label for="password" [ngClass]="{
+                'p-error':
+                  password?.invalid && (password?.dirty || password?.touched)
+              }">Password</label>
           </div>
-          <small *ngIf="password?.invalid && (password?.dirty || password?.touched)" class="block p-error">
-            <div *ngIf="password?.errors?.['required']">Password is required</div>
-            <div *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters long</div>
+          <small *ngIf="
+            password?.invalid &&
+            (password?.dirty || password?.touched)
+          " class="block p-error">
+            <div *ngIf="password?.errors?.['required']">
+              Password is required
+            </div>
+            <div *ngIf="password?.errors?.['minlength']">
+              Password must be at least 6 characters long
+            </div>
           </small>
         </div>
 
-        <div class="mb-5">
-          <div class="p-field p-float-label p-input-icon-left p-password p-password-info w-full" [ngClass]="{ 'p-error': confirmpassword?.invalid && (confirmpassword?.dirty || confirmpassword?.touched) }">
-            <i class="pi pi-lock" [ngClass]="{ 'p-error': confirmpassword?.invalid && (confirmpassword?.dirty || confirmpassword?.touched) }"></i>
-            <p-password id="confirmpassword" formControlName="confirmpassword" [toggleMask]="true" [feedback]="true" [inputStyle]="{paddingLeft:'2.5rem',width: '100%', 'border-color': confirmpassword?.invalid && (confirmpassword?.dirty || confirmpassword?.touched) ? 'red' : '' }"  [style]="{ width: '100%' }" class="w-full"></p-password>
-            <label for="confirmpassword" [ngClass]="{ 'p-error': confirmpassword?.invalid && (confirmpassword?.dirty || confirmpassword?.touched) }">Confirm Password</label>
+        <div class="mb-5 w-full">
+          <div class="p-field p-float-label p-input-icon-left p-password p-password-info w-full" [ngClass]="{
+              'p-error':
+                confirmpassword?.invalid &&
+                (confirmpassword?.dirty || confirmpassword?.touched)
+            }">
+            <i [ngClass]="{
+                'pi pi-lock': true,
+                'p-error':
+                  confirmpassword?.invalid &&
+                  (confirmpassword?.dirty || confirmpassword?.touched)
+              }"></i>
+            <p-password id="confirmpassword" type="password" [inputStyle]="{paddingLeft:'2.5rem',
+                width: '100%',
+                'border-color':
+                  confirmpassword?.invalid &&
+                  (confirmpassword?.dirty || confirmpassword?.touched)
+                    ? 'red'
+                    : ''
+              }" [style]="{ width: '100%' }" formControlName="confirmpassword" class="w-full" [toggleMask]="true"
+              [feedback]="true"></p-password>
+            <label for="confirmpassword" [ngClass]="{
+                'p-error':
+                  confirmpassword?.invalid &&
+                  (confirmpassword?.dirty || confirmpassword?.touched)
+              }">Confirm Password</label>
           </div>
-          <small *ngIf="confirmpassword?.invalid && (confirmpassword?.dirty || confirmpassword?.touched)" class="block p-error">
-            <div *ngIf="confirmpassword?.errors?.['required']">Confirm Password is required</div>
-            <div *ngIf="password?.errors?.['minlength']">Confirm Password must be at least 6 characters long</div>
+          <small *ngIf="
+              confirmpassword?.invalid &&
+              (confirmpassword?.dirty || confirmpassword?.touched)
+            " class="block p-error">
+            <div *ngIf="confirmpassword?.errors?.['required']">
+              Confirm Password is required
+            </div>
+            <div *ngIf="password?.errors?.['minlength']">
+              Confirm Password must be at least 6 characters long
+            </div>
           </small>
         </div>
 
         <div class="flex items-center justify-between mb-6 w-full">
           <div class="flex items-center">
-            <p-checkbox id="terms" [binary]="true" formControlName="terms" class="mr-2"></p-checkbox>
+            <p-checkbox id="terms" [binary]="true" styleClass="mr-2" formControlName="terms"></p-checkbox>
             <label for="terms" class="text-900">
               Agree on
-              <span class="text-blue-500 hover:underline cursor-pointer" (click)="showTerms = true">Terms & Conditions.</span>
+              <span class="text-blue-500 hover:underline cursor-pointer" (click)="showTerms = true">Terms &
+                Conditions.</span>
             </label>
           </div>
           <div class="ml-auto md:text-right sm:text-right">
@@ -84,27 +162,77 @@
           </div>
         </div>
 
-        <p-dialog header="Terms & Conditions" [modal]="true" [(visible)]="showTerms" [style]="{ width: '50rem' }" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [draggable]="false">
+
+
+        <p-dialog header="Terms & Conditions" [modal]="true" [(visible)]="showTerms" [style]="{ width: '50rem' }"
+          [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [draggable]="false">
+
           <div class="terms-container">
+
             <div class="terms-content">
               <ol>
-                <li><strong>Acceptance of Terms:</strong> By accessing or using the ledger app, you agree to be bound by these terms and conditions, which govern your use of the app. If you do not agree to these terms and conditions, you may not access or use the app.</li>
-                <li><strong>Privacy Policy:</strong> Your privacy is important to us. Please review our Privacy Policy, which governs the collection, use, and disclosure of your personal information.</li>
-                <li><strong>Use of the App:</strong> You may use the ledger app for your personal or business financial management purposes only. You agree not to use the app for any illegal or unauthorized purpose.</li>
-                <li><strong>Account Registration:</strong> In order to access certain features of the app, you may be required to register for an account. You agree to provide accurate, current, and complete information during the registration process and to update such information to keep it accurate, current, and complete.</li>
-                <li><strong>Security:</strong> You are responsible for maintaining the security of your account credentials and for any activities that occur under your account. You agree to notify us immediately of any unauthorized use of your account or any other breach of security.</li>
-                <li><strong>Intellectual Property:</strong> The app and its original content, features, and functionality are owned by us and are protected by international copyright, trademark, patent, trade secret, and other intellectual property or proprietary rights laws.</li>
-                <li><strong>Disclaimer of Warranties:</strong> The app is provided "as is" and "as available" without warranties of any kind, either express or implied. We do not warrant that the app will be uninterrupted or error-free, that defects will be corrected, or that the app or the servers that make it available are free of viruses or other harmful components.</li>
-                <li><strong>Limitation of Liability:</strong> In no event shall we be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from various scenarios.</li>
-                <li><strong>Modification of Terms:</strong> We reserve the right to modify or replace these terms and conditions at any time without prior notice. Your continued use of the app after any such changes constitutes your acceptance of the new terms and conditions.</li>
-                <li><strong>Governing Law:</strong> These terms and conditions shall be governed by and construed in accordance with the laws of [Your Jurisdiction], without regard to its conflict of law provisions.</li>
-                <li><strong>Contact Us:</strong> If you have any questions about these terms and conditions, please contact us at on our Email - <span class="hover:cursor-pointer text-blue-500">ishvinder133&#64;gmail.com.</span></li>
+                <li>
+                  <strong>Acceptance of Terms:</strong> By accessing or using the ledger app, you agree to be bound by
+                  these terms and conditions, which govern your use of the app. If you do not agree to these terms and
+                  conditions, you may not access or use the app.
+                </li>
+                <li>
+                  <strong>Privacy Policy:</strong> Your privacy is important to us. Please review our Privacy Policy,
+                  which governs the collection, use, and disclosure of your personal information.
+                </li>
+                <li>
+                  <strong>Use of the App:</strong> You may use the ledger app for your personal or business financial
+                  management purposes only. You agree not to use the app for any illegal or unauthorized purpose.
+                </li>
+                <li>
+                  <strong>Account Registration:</strong> In order to access certain features of the app, you may be
+                  required to register for an account. You agree to provide accurate, current, and complete information
+                  during the registration process and to update such information to keep it accurate, current, and
+                  complete.
+                </li>
+                <li>
+                  <strong>Security:</strong> You are responsible for maintaining the security of your account
+                  credentials and for any activities that occur under your account. You agree to notify us immediately
+                  of any unauthorized use of your account or any other breach of security.
+                </li>
+                <li>
+                  <strong>Intellectual Property:</strong> The app and its original content, features, and functionality
+                  are owned by us and are protected by international copyright, trademark, patent, trade secret, and
+                  other intellectual property or proprietary rights laws.
+                </li>
+                <li>
+                  <strong>Disclaimer of Warranties:</strong> The app is provided "as is" and "as available" without
+                  warranties of any kind, either express or implied. We do not warrant that the app will be
+                  uninterrupted or error-free, that defects will be corrected, or that the app or the servers that make
+                  it available are free of viruses or other harmful components.
+                </li>
+                <li>
+                  <strong>Limitation of Liability:</strong> In no event shall we be liable for any indirect, incidental,
+                  special, consequential, or punitive damages, including without limitation, loss of profits, data, use,
+                  goodwill, or other intangible losses, resulting from various scenarios.
+                </li>
+                <li>
+                  <strong>Modification of Terms:</strong> We reserve the right to modify or replace these terms and
+                  conditions at any time without prior notice. Your continued use of the app after any such changes
+                  constitutes your acceptance of the new terms and conditions.
+                </li>
+                <li>
+                  <strong>Governing Law:</strong> These terms and conditions shall be governed by and construed in
+                  accordance with the laws of [Your Jurisdiction], without regard to its conflict of law provisions.
+                </li>
+                <li>
+                  <strong>Contact Us:</strong> If you have any questions about these terms and conditions, please
+                  contact us at on our Email - <span
+                    class="hover:cursor-pointer text-blue-500">ishvinder133&#64;gmail.com.</span>
+                </li>
               </ol>
             </div>
           </div>
         </p-dialog>
 
-        <button pButton pRipple label="Sign Up" icon="pi pi-user" class="w-full" (click)="onSubmit()" [disabled]="!registerForm.valid"></button>
+
+        <button pButton pRipple label="Sign Up" icon="pi pi-user" class="w-full" (click)="onSubmit()"
+          [disabled]="!registerForm.valid"></button>
       </div>
     </form>
   </div>
