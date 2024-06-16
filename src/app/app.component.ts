@@ -28,6 +28,7 @@ import { HttpClientModule } from '@angular/common/http';
     NavbarComponent,
     TooltipModule,
     RouterModule,
+    HttpClientModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

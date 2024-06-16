@@ -94,15 +94,16 @@ export class NavbarComponent {
   cookieValue: string | undefined;
   isCookie: boolean = false;
   logout() {
+    this.cookieService.delete('token', '/');
     this.router.navigate(['/login']);
   }
   checkCookie() {
-    this.isCookie = this.cookieService.check('WorkstationJwt');
+    this.isCookie = this.cookieService.check('token');
     console.log('isCookie:', this.isCookie);
     return this.isCookie;
   }
   getCookie() {
-    this.cookieValue = this.cookieService.get('WorkstationJwt');
+    this.cookieValue = this.cookieService.get('token');
     console.log('cookieValue:', this.cookieValue);
     return this.cookieValue;
   }

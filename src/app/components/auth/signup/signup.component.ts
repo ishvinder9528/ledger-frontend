@@ -24,6 +24,7 @@ import { CardModule } from 'primeng/card';
 import {
   HttpClient,
   HttpClientModule,
+  HttpHeaders,
   HttpResponse,
 } from '@angular/common/http';
 import { SignupService } from '../../../services/auth/signup/signup.service';
@@ -110,11 +111,22 @@ export class SignupComponent {
   }
 
   onSubmit() {
+    const signupService = new SignupService(this.http);
     console.log(this.registerForm.value);
-    const signup = new SignupService(this.http);
-    signup.signup(this.registerForm.value).subscribe({
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    signupService.signup(this.registerForm.value, headers).subscribe({
       next: (data: any) => {
         console.log('data:', data);
+        console.log(
+          'data header content type:',
+          data.headers.get('content-type')
+        );
+        console.log('data header', data.headers);
+        console.log('data header Cookie:', data.headers.get('Set-Cookie'));
+        console.log('data header Cookie:', data.headers.get('set-cookie'));
         this.router.navigate(['/verify']);
       },
       error: (error: any) => {
