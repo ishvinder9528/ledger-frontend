@@ -33,3 +33,20 @@
     border-right-style: solid;
     border-color: var(--surface-400);
 }
+@media (max-width: 1024px) {
+    .lg\:w-6 {
+        width: 75% !important; /* Equivalent to w-8 for tablet */
+    }
+}
+
+@media (max-width: 768px) {
+    .md\:w-8 {
+        width: 83.33% !important; /* Equivalent to w-10 for mobile */
+    }
+}
+
+@media (max-width: 576px) {
+    .sm\:w-10 {
+        width: 100% !important; /* Full width for small screens */
+    }
+}
