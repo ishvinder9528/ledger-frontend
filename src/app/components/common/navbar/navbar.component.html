@@ -77,7 +77,7 @@
 
   <ng-template pTemplate="end">
     <div class="flex align-items-center gap-2">
-      <ng-container *ngIf="!cookieValue; else loggedInTemplate">
+      <ng-container *ngIf="!isToken; else loggedInTemplate">
         <button
           pButton
           pRipple

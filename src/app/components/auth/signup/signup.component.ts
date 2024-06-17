@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -28,6 +28,7 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { SignupService } from '../../../services/auth/signup/signup.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
@@ -55,6 +56,7 @@ import { SignupService } from '../../../services/auth/signup/signup.service';
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
+@Injectable({ providedIn: 'root' })
 export class SignupComponent {
   constructor(
     private fb: FormBuilder,
@@ -117,17 +119,18 @@ export class SignupComponent {
       'Content-Type': 'application/json',
     });
 
-    signupService.signup(this.registerForm.value, headers).subscribe({
+    signupService.signup(this.registerForm.value,headers).subscribe({
       next: (data: any) => {
         console.log('data:', data);
-        console.log(
-          'data header content type:',
-          data.headers.get('content-type')
-        );
-        console.log('data header', data.headers);
-        console.log('data header Cookie:', data.headers.get('Set-Cookie'));
-        console.log('data header Cookie:', data.headers.get('set-cookie'));
-        this.router.navigate(['/verify']);
+        if (data.ok) {
+          const expiryTime = Date.now() + 24 * 60 * 60 * 1000;
+          localStorage.setItem('token', data.body.token);
+          localStorage.setItem('tokenExpiry', expiryTime.toString());
+          this.router.navigate(['/verify']);
+        } else {
+          this.router.navigate(['/signup']);
+          alert('Error, Something went wrong');
+        }
       },
       error: (error: any) => {
         console.error('An error occurred:', error);

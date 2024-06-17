@@ -9,8 +9,8 @@ import {
 import { ButtonModule } from 'primeng/button';
 import { ImageModule } from 'primeng/image';
 import { StyleClassModule } from 'primeng/styleclass';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
+import { PageNotFoundComponent } from './components/common/page-not-found/page-not-found.component';
+import { NavbarComponent } from './components/common/navbar/navbar.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { HttpClientModule } from '@angular/common/http';
 

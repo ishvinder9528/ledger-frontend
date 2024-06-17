@@ -16,9 +16,9 @@ export class SignupService {
 
   signup(data: any, headers?: HttpHeaders): Observable<any> {
     return this.http.post<any>(`${this.url}/auth/create`, data, {
-      headers: headers,
+      headers,
       observe: 'response',
-      withCredentials:true
+      withCredentials: true,
     });
   }
 

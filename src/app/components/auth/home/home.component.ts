@@ -15,7 +15,6 @@ import { LoaderComponent } from '../../../helpers/loader/loader.component';
     RouterLink,
     HttpClientModule,
     LoaderComponent,
-
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
@@ -23,14 +22,14 @@ import { LoaderComponent } from '../../../helpers/loader/loader.component';
 export class HomeComponent {
   constructor(private http: HttpClient) {}
 
-  checkBE: any= undefined;
+  checkBE: any = undefined;
 
   ngOnInit() {
     this.checkBackend();
   }
 
   checkBackend() {
-    const signUp = new SignupService(this.http); // Inject SignupService here when needed
+    const signUp = new SignupService(this.http);
     signUp.checkBackend().subscribe({
       next: (data: any) => {
         this.checkBE = data;

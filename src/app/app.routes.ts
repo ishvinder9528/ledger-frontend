@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { SignupComponent } from './components/auth/signup/signup.component';
 import { HomeComponent } from './components/auth/home/home.component';
-import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './components/common/page-not-found/page-not-found.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { DashboardComponent } from './components/common/dashboard/dashboard.component';
 import { OtpVerificationComponent } from './components/auth/otp-verification/otp-verification.component';

@@ -12,6 +12,7 @@ import { RippleModule } from 'primeng/ripple';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { MenuModule } from 'primeng/menu';
 import { CookieService } from 'ngx-cookie-service';
+import { checkToken as checkTokenEnv } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-navbar',
@@ -40,8 +41,7 @@ export class NavbarComponent {
       if (event instanceof NavigationEnd) {
         this.currentRoute = this.router.url;
         console.log('current Route:', this.currentRoute);
-        this.checkCookie();
-        this.getCookie();
+        this.isToken = this.checkToken();
       }
     });
   }
@@ -82,7 +82,7 @@ export class NavbarComponent {
       icon: 'pi pi-sign-out',
       label: 'Logout',
       command: () => {
-        this.router.navigate(['/login']);
+        this.logout();
       },
     },
   ];
@@ -91,20 +91,13 @@ export class NavbarComponent {
   image: string = `https://avatar.iran.liara.run/public?username=${this._id}`;
   currentRoute: any;
   showMenu: boolean = false;
-  cookieValue: string | undefined;
-  isCookie: boolean = false;
+  isToken: boolean = false;
   logout() {
-    this.cookieService.delete('token', '/');
+    localStorage.removeItem('token');
+    localStorage.removeItem('tokenExpiry');
     this.router.navigate(['/login']);
   }
-  checkCookie() {
-    this.isCookie = this.cookieService.check('token');
-    console.log('isCookie:', this.isCookie);
-    return this.isCookie;
-  }
-  getCookie() {
-    this.cookieValue = this.cookieService.get('token');
-    console.log('cookieValue:', this.cookieValue);
-    return this.cookieValue;
+  checkToken() {
+    return checkTokenEnv();
   }
 }
