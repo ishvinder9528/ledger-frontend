@@ -4,7 +4,7 @@ import { ButtonModule } from 'primeng/button';
 import { StyleClassModule } from 'primeng/styleclass';
 import { SignupService } from '../../../services/auth/signup/signup.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { LoaderComponent } from '../../../helpers/loader/loader.component';
+import { LoaderComponent } from '../../helpers/loader/loader.component';
 
 @Component({
   selector: 'app-home',
