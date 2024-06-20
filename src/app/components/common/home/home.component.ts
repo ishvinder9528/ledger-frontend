@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { StyleClassModule } from 'primeng/styleclass';
 import { SignupService } from '../../../services/auth/signup/signup.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { LoaderComponent } from '../../helpers/loader/loader.component';
+import { checkToken } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -20,12 +21,15 @@ import { LoaderComponent } from '../../helpers/loader/loader.component';
   styleUrl: './home.component.css',
 })
 export class HomeComponent {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private router:Router) {}
 
   checkBE: any = undefined;
 
   ngOnInit() {
     this.checkBackend();
+    if(this.hasToken()){
+      this.router.navigate(['/dashboard'])
+    }
   }
 
   checkBackend() {
@@ -39,5 +43,9 @@ export class HomeComponent {
         console.error('An error occurred:', error);
       },
     });
+  }
+  
+  hasToken(){
+    return checkToken()
   }
 }

@@ -12,7 +12,11 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpClientModule,
+  HttpHeaders,
+} from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { DialogModule } from 'primeng/dialog';
 import { DividerModule } from 'primeng/divider';
@@ -20,6 +24,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { PasswordModule } from 'primeng/password';
+import { LoginService } from '../../../services/auth/login/login.service';
 
 @Component({
   selector: 'app-login',
@@ -48,10 +53,6 @@ import { PasswordModule } from 'primeng/password';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  onSubmit() {
-    throw new Error('Method not implemented.');
-  }
-
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -99,4 +100,30 @@ export class LoginComponent {
   }
 
   showTerms: any;
+  headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
+
+  onSubmit() {
+    const loginService = new LoginService(this.http);
+    console.log('login form:', this.loginForm.value);
+
+    loginService.login(this.loginForm.value, this.headers).subscribe({
+      next: (data: any) => {
+        console.log('data');
+        if (data.ok) {
+          const expiryTime = Date.now() + 24 * 60 * 60 * 1000;
+          localStorage.setItem('token', data.body.token);
+          localStorage.setItem('tokenExpiry', expiryTime.toString());
+          this.router.navigate(['/dashboard']);
+        } else {
+          alert('some error');
+        }
+      },
+      error: (error: any) => {
+        console.log('some Error occured:', error);
+        alert(`some Error: ${error}`);
+      },
+    });
+  }
 }

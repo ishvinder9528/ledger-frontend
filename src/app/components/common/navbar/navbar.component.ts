@@ -12,7 +12,13 @@ import { RippleModule } from 'primeng/ripple';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { MenuModule } from 'primeng/menu';
 import { CookieService } from 'ngx-cookie-service';
-import { checkToken as checkTokenEnv } from '../../../../environments/environment';
+import {
+  checkToken as checkTokenEnv,
+  getToken,
+} from '../../../../environments/environment';
+import { ProfileComponent } from '../profile/profile.component';
+import { ProfileService } from '../../../services/common/profile/profile.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-navbar',
@@ -34,7 +40,11 @@ import { checkToken as checkTokenEnv } from '../../../../environments/environmen
   styleUrl: './navbar.component.css',
 })
 export class NavbarComponent {
-  constructor(private router: Router, private cookieService: CookieService) {}
+  constructor(
+    private router: Router,
+    private cookieService: CookieService,
+    private http: HttpClient
+  ) {}
 
   ngOnInit(): void {
     this.router.events.subscribe((event) => {
@@ -42,10 +52,17 @@ export class NavbarComponent {
         this.currentRoute = this.router.url;
         console.log('current Route:', this.currentRoute);
         this.isToken = this.checkToken();
+        this.getUser();
+        this.image = `https://avatar.iran.liara.run/public?username=${this._id}`;
       }
     });
   }
 
+  userService: any = new ProfileService(this.http);
+  headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'X-Token': this.getToken(),
+  });
   items: MenuItem[] = [
     {
       icon: 'pi pi-home',
@@ -88,7 +105,7 @@ export class NavbarComponent {
   ];
 
   _id: any = 'test';
-  image: string = `https://avatar.iran.liara.run/public?username=${this._id}`;
+  image: string = '';
   currentRoute: any;
   showMenu: boolean = false;
   isToken: boolean = false;
@@ -99,5 +116,18 @@ export class NavbarComponent {
   }
   checkToken() {
     return checkTokenEnv();
+  }
+  getUser() {
+    this.userService.getUser(this.headers).subscribe({
+      next: (data: any) => {
+        this._id = data.user._id;
+      },
+      error: (error: any) => {
+        console.log('some error occured:', error);
+      },
+    });
+  }
+  getToken() {
+    return getToken();
   }
 }
