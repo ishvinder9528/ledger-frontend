@@ -56,10 +56,8 @@ export class OtpVerificationComponent {
 
   verifying(value: any) {
     this.data.otp = value;
-    console.log('data:', this.data);
     this.verifyService.verifyOtp(this.data, this.headers).subscribe({
       next: (data: any) => {
-        console.log('data:', data);
         this.router.navigate(['/dashboard']);
       },
       error: (error: any) => {
@@ -69,10 +67,8 @@ export class OtpVerificationComponent {
   }
 
   resendOtp() {
-    console.log('data:', this.data);
     this.verifyService.resendOtp(this.headers).subscribe({
       next: (data: any) => {
-        console.log('data:', data);
       },
       error: (error: any) => {
         console.log('error occured', error);

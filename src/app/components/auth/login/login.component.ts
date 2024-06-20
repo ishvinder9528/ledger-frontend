@@ -106,11 +106,8 @@ export class LoginComponent {
 
   onSubmit() {
     const loginService = new LoginService(this.http);
-    console.log('login form:', this.loginForm.value);
-
     loginService.login(this.loginForm.value, this.headers).subscribe({
       next: (data: any) => {
-        console.log('data');
         if (data.ok) {
           const expiryTime = Date.now() + 24 * 60 * 60 * 1000;
           localStorage.setItem('token', data.body.token);
@@ -121,7 +118,6 @@ export class LoginComponent {
         }
       },
       error: (error: any) => {
-        console.log('some Error occured:', error);
         alert(`some Error: ${error}`);
       },
     });

@@ -28,6 +28,8 @@ import {
 import { CustomerService } from '../../../services/customer/customer.service';
 import { TooltipModule } from 'primeng/tooltip';
 import { EditCustomersComponent } from './helpers/edit-customers/edit-customers.component';
+import { TransactionsComponent } from '../transactions/transactions.component';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -48,12 +50,17 @@ import { EditCustomersComponent } from './helpers/edit-customers/edit-customers.
     FormsModule,
     ReactiveFormsModule,
     TooltipModule,
+    RouterLink,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent {
-  constructor(private http: HttpClient, private fb: FormBuilder) {}
+  constructor(
+    private http: HttpClient,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
   @ViewChild('customer') customerTable: Table | undefined;
 
   debit: number = 0;
@@ -105,7 +112,6 @@ export class DashboardComponent {
   getCustomer() {
     this.customerService.getCustomer(this.headers).subscribe({
       next: (data: any) => {
-        console.log('Customers:', data);
         this.customers = data.customer;
       },
       error: (error: any) => {
@@ -113,23 +119,26 @@ export class DashboardComponent {
       },
     });
   }
-  getCustomerById() {
-    this.customerService
-      .getCustomerById(this.customer_id, this.headers)
-      .subscribe({
-        next: (data: any) => {
-          this.customer_data = data.customer;
-          console.log('Customer:', this.customer_data);
-        },
-        error: (error: any) => {
-          console.log('some error occured:', error);
-        },
-      });
+  getCustomerById(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.customerService
+        .getCustomerById(this.customer_id, this.headers)
+        .subscribe({
+          next: (data: any) => {
+            this.customer_data = data.customer;
+            resolve(); // Resolve the Promise once the data is fetched
+          },
+          error: (error: any) => {
+            console.log('some error occured:', error);
+            reject(error); // Reject the Promise if an error occurs
+          },
+        });
+    });
   }
+
   saveCustomer(customerdData: any) {
     this.customerService.createCustomer(customerdData, this.headers).subscribe({
       next: (data: any) => {
-        console.log('data', data);
         this.getCustomer();
       },
       error: (error: any) => {
@@ -137,13 +146,23 @@ export class DashboardComponent {
       },
     });
   }
+  editCustomer(customerdData: any) {
+    this.customerService
+      .editCustomer(this.customer_id, customerdData, this.headers)
+      .subscribe({
+        next: (data: any) => {
+          this.getCustomer();
+        },
+        error: (error: any) => {
+          console.log('some error occured:', error);
+        },
+      });
+  }
 
   getUser() {
     this.userService.getUser(this.headers).subscribe({
       next: (data: any) => {
-        console.log('data', data);
         this.user = data.user;
-        console.log('this.user:', this.user);
       },
       error: (error: any) => {
         console.log('some error occured:', error);
@@ -166,6 +185,22 @@ export class DashboardComponent {
   }
   hideDialog() {
     this.editVisible = false;
+  }
+  navigateToTransction(customer: any) {
+    this.customer_id = customer?._id;
+
+    this.getCustomerById()
+      .then(() => {
+        const data = {
+          id: this.customer_id,
+          user: this.user,
+          data: this.customer_data,
+        };
+        this.router.navigate(['/transaction'], { state: data });
+      })
+      .catch((error: any) => {
+        console.log('error:', error);
+      });
   }
 
   counterArray(n: number): any[] {

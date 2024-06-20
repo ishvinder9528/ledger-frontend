@@ -50,7 +50,6 @@ export class NavbarComponent {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.currentRoute = this.router.url;
-        console.log('current Route:', this.currentRoute);
         this.isToken = this.checkToken();
         this.getUser();
         this.image = `https://avatar.iran.liara.run/public?username=${this._id}`;

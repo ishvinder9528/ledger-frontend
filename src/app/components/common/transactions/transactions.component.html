@@ -1,0 +1,26 @@
+<div class="mt-2 md:mt-3 p-3">
+
+    <p-card header="{{user.name}} - {{data.name}}">
+
+        <ul class="list-none p-0 m-0">
+            <li class="flex items-center">
+                <span class="text-900 font-medium mr-2">Email:</span>
+                <span class="text-600">{{data.email}}</span>
+            </li>
+            <li class="flex items-center">
+                <span class="text-900 font-medium mr-2">GST No.:</span>
+                <span class="text-600">{{data.gst_no || "not updated"}}</span>
+            </li>
+            <li class="flex items-center">
+                <span class="text-900 font-medium mr-2">Phone No.:</span>
+                <span class="text-600">{{data.phone_no || 'not updated'}}</span>
+            </li>
+            <button pButton type="button" label="Edit" class="p-button-outlined p-button-success" (click)="edit()"
+                icon="pi pi-pencil"></button>
+
+        </ul>
+
+    </p-card>
+
+
+</div>

@@ -32,7 +32,7 @@ import { InputTextModule } from 'primeng/inputtext';
     InputTextModule,
   ],
   templateUrl: './edit-customers.component.html',
-  styleUrl: './edit-customers.component.css',
+  styleUrls: ['./edit-customers.component.css'],
 })
 export class EditCustomersComponent implements OnInit, OnChanges {
   @Input() visible: boolean = false;
@@ -40,16 +40,12 @@ export class EditCustomersComponent implements OnInit, OnChanges {
   @Input() user: any = '';
   @Input() avatar_image: string = '';
   @Output() visibleChange = new EventEmitter<boolean>();
-  @Output() saveCustomer = new EventEmitter<any>();
+  @Output() editCustomer = new EventEmitter<any>();
+  loading: boolean = true;
 
   constructor(private fb: FormBuilder) {}
 
-  customerForm = this.fb.group({
-    name: ['', [Validators.required]],
-    email: ['', [Validators.email]],
-    phone_no: [''],
-    gst_no: [''],
-  });
+  customerForm = this.createCustomerForm();
 
   get name() {
     return this.customerForm.get('name');
@@ -57,19 +53,35 @@ export class EditCustomersComponent implements OnInit, OnChanges {
   get email() {
     return this.customerForm.get('email');
   }
-
   get phone_no() {
     return this.customerForm.get('phone_no');
   }
-
   get gst_no() {
     return this.customerForm.get('gst_no');
   }
 
   ngOnInit() {
-    console.log('user:', this.user);
-    console.log('customer:', this.customer);
     this.patchFormValues();
+    this.disableFormControls(true);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['user']) {
+    }
+    if (changes['customer']) {
+      this.loading = false;
+      this.patchFormValues();
+      this.disableFormControls(false);
+    }
+  }
+
+  createCustomerForm() {
+    return this.fb.group({
+      name: ['', [Validators.required]],
+      email: ['', [Validators.email]],
+      phone_no: [''],
+      gst_no: [''],
+    });
   }
 
   patchFormValues() {
@@ -78,27 +90,27 @@ export class EditCustomersComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['user']) {
-      console.log('ngOnChanges - user:', this.user);
-    }
-    if (changes['customer']) {
-      console.log('ngOnChanges - customer:', this.customer);
-      this.customerForm = this.fb.group({
-        name: [this.customer.name, [Validators.required]],
-        email: [this.customer.email, [Validators.email]],
-        phone_no: [this.customer.phone_no],
-        gst_no: [this.customer.gst_no],
-      });
-    }
-  }
   hideDialog() {
     this.visible = false;
+    this.loading = true;
     this.visibleChange.emit(this.visible);
+    this.customerForm.reset(); // Reset the form
+    this.customer = '';
+    this.disableFormControls(true);
   }
 
-  onSaveCustomer() {
-    this.saveCustomer.emit(this.customerForm.value);
+  disableFormControls(disable: boolean) {
+    if (disable) {
+      this.customerForm.disable();
+    } else {
+      this.customerForm.enable();
+    }
+  }
+
+  onEditCustomer() {
+    this.editCustomer.emit(this.customerForm.value);
     this.hideDialog();
+    this.disableFormControls(true);
+    this.customerForm.reset();
   }
 }

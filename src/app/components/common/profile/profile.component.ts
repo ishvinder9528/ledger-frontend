@@ -41,7 +41,6 @@ export class ProfileComponent {
 
     profileService.getUser(this.headers).subscribe({
       next: (data: any) => {
-        console.log('data:', data);
         this.user = data.user;
       },
       error: (error: any) => {

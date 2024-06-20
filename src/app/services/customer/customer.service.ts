@@ -17,7 +17,7 @@ export class CustomerService {
       withCredentials: true,
     });
   }
-  getCustomerById(id:any,headers: HttpHeaders): Observable<any> {
+  getCustomerById(id: any, headers: HttpHeaders): Observable<any> {
     return this.http.get<any>(`${this.url}/customer/customer?id=${id}`, {
       headers,
       withCredentials: true,
@@ -26,6 +26,13 @@ export class CustomerService {
 
   createCustomer(data: any, headers: HttpHeaders): Observable<any> {
     return this.http.post<any>(`${this.url}/customer/create`, data, {
+      headers,
+      withCredentials: true,
+    });
+  }
+
+  editCustomer(id: any, data: any, headers: HttpHeaders): Observable<any> {
+    return this.http.put<any>(`${this.url}/customer/modify/${id}`, data, {
       headers,
       withCredentials: true,
     });

@@ -6,6 +6,7 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { DashboardComponent } from './components/common/dashboard/dashboard.component';
 import { OtpVerificationComponent } from './components/auth/otp-verification/otp-verification.component';
 import { ProfileComponent } from './components/common/profile/profile.component';
+import { TransactionsComponent } from './components/common/transactions/transactions.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -14,6 +15,7 @@ export const routes: Routes = [
   { path: 'verify', component: OtpVerificationComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'profile', component: ProfileComponent },
+  { path: 'transaction', component: TransactionsComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 ];

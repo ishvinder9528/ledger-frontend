@@ -114,14 +114,12 @@ export class SignupComponent {
 
   onSubmit() {
     const signupService = new SignupService(this.http);
-    console.log(this.registerForm.value);
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
 
     signupService.signup(this.registerForm.value,headers).subscribe({
       next: (data: any) => {
-        console.log('data:', data);
         if (data.ok) {
           const expiryTime = Date.now() + 24 * 60 * 60 * 1000;
           localStorage.setItem('token', data.body.token);

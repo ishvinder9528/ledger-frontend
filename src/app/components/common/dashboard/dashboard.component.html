@@ -57,8 +57,8 @@
                 <div class="card flex justify-content-center">
                     <app-add-customers [(visible)]="addVisible" [user]="user" [avatar_image]="avatar_image"
                         (saveCustomer)="saveCustomer($event)"></app-add-customers>
-                  <app-edit-customers [(visible)]="editVisible" [user]="user" [avatar_image]="avatar_image"
-                  (saveCustomer)="saveCustomer($event)" [customer]="customer_data"></app-edit-customers>
+                    <app-edit-customers [(visible)]="editVisible" [user]="user" [avatar_image]="avatar_image"
+                        (editCustomer)="editCustomer($event)" [customer]="customer_data"></app-edit-customers>
                 </div>
                 <p-table [value]="customers" #customer [rows]="5" [rowsPerPageOptions]="[5, 10, 50]" [paginator]="true"
                     [globalFilterFields]="['name']" responsiveLayout="stack" [breakpoint]="'756px'"
@@ -87,13 +87,14 @@
                     <ng-template pTemplate="body" let-customer>
                         <tr>
                             <td> <span class="p-column-title">Name</span>{{ customer.name }}</td>
-                            <td> <span class="p-column-title">Email</span>{{ customer.email }}</td>
+                            <td> <span class="p-column-title">Email</span>{{ customer.email || "email not updated" }}
+                            </td>
                             <td> <span class="p-column-title">Debit</span>{{ debit }}</td>
                             <td> <span class="p-column-title">Income</span>{{ income}}</td>
                             <td>
                                 <p-button class="mr-2" icon="pi pi-file-edit" severity="warning" pTooltip="edit"
                                     (onClick)="showEditDialog(customer)" />
-                                <p-button icon="pi pi-expand" pTooltip="expand" />
+                                <p-button icon="pi pi-expand" pTooltip="expand" (click)="navigateToTransction(customer)" />
                             </td>
                         </tr>
 

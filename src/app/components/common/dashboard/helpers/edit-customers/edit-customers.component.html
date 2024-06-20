@@ -1,4 +1,5 @@
-<p-dialog header="Header" [(visible)]="visible" [modal]="true" [draggable]="false" [style]="{ width: '50rem' }" (onHide)="hideDialog()" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+<p-dialog header="Header" [(visible)]="visible" [modal]="true" [draggable]="false" [style]="{ width: '50rem' }"
+    (onHide)="hideDialog()" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
     <ng-template pTemplate="header">
         <div class="inline-flex align-items-center justify-content-center gap-2">
             <p-avatar [image]="avatar_image" shape="circle"></p-avatar>
@@ -11,23 +12,16 @@
     <form [formGroup]="customerForm">
         <div class="flex align-items-center gap-3 mb-3">
             <label for="name" class="font-semibold w-6rem">Name</label>
-            <input pInputText formControlName="name" id="name" class="flex-auto" autocomplete="off" />
+            <input pInputText formControlName="name" id="name" class="flex-auto" autocomplete="off"  />
         </div>
         <div class="flex align-items-center gap-3 mb-5">
             <label for="email" class="font-semibold w-6rem">Email</label>
-            <input pInputText formControlName="email" id="email" class="flex-auto" autocomplete="off" />
-        </div>
-        <div class="flex align-items-center gap-3 mb-5">
-            <label for="phone" class="font-semibold w-6rem">Phone No.</label>
-            <input pInputText formControlName="phone_no" id="phone" class="flex-auto" autocomplete="off" />
-        </div>
-        <div class="flex align-items-center gap-3 mb-5">
-            <label for="gst" class="font-semibold w-6rem">GST No.</label>
-            <input pInputText formControlName="gst_no" id="gst" class="flex-auto" autocomplete="off" />
+            <input pInputText formControlName="email" id="email" class="flex-auto" autocomplete="off"
+                 />
         </div>
     </form>
     <ng-template pTemplate="footer">
         <p-button label="Cancel" [text]="true" severity="secondary" (click)="hideDialog()"></p-button>
-        <p-button label="Edit" [outlined]="true" severity="secondary" (click)="onSaveCustomer()"></p-button>
+        <p-button label="Edit" [outlined]="true" severity="secondary" (click)="onEditCustomer()"></p-button>
     </ng-template>
 </p-dialog>

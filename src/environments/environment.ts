@@ -34,7 +34,5 @@ export const getToken = () => {
     localStorage.removeItem('tokenExpiry');
     return '';
   }
-  console.log("token:", token);
-  
   return token;
 };
