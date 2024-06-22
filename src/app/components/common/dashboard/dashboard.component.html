@@ -1,5 +1,5 @@
 <div class="mt-2 md:mt-3 p-3">
-    <p-card header="Your Customers">
+    <p-card header="{{user.name}}'s Customers">
         <p class="m-0"></p>
 
         <div class="mt-2 md:mt-3 p-3">
@@ -60,48 +60,53 @@
                     <app-edit-customers [(visible)]="editVisible" [user]="user" [avatar_image]="avatar_image"
                         (editCustomer)="editCustomer($event)" [customer]="customer_data"></app-edit-customers>
                 </div>
-                <p-table [value]="customers" #customer [rows]="5" [rowsPerPageOptions]="[5, 10, 50]" [paginator]="true"
-                    [globalFilterFields]="['name']" responsiveLayout="stack" [breakpoint]="'756px'"
-                    [tableStyle]="{'min-width': '15rem'}" [showCurrentPageReport]="true"
-                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
-                    <ng-template pTemplate="caption">
-                        <div class="flex align-items-center justify-content-between">
-                            <span class="p-input-icon-right">
-                                <i class="pi pi-search"></i>
-                                <input pInputText type="text" class="w-12rem" [(ngModel)]="searchValue"
-                                    placeholder="Search keyword" (input)="onSearch($event)" />
-                            </span>
-                            <p-button icon="pi pi-refresh" (onClick)="getCustomer()" />
-                        </div>
-                    </ng-template>
-                    <ng-template pTemplate="header">
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Debit</th>
-                            <th>Income</th>
-                            <th style="width:10rem">Action</th>
-                        </tr>
-                    </ng-template>
+                <div class="table-container">
+                    <p-table [value]="customers" #customer [rows]="5" [rowsPerPageOptions]="[5, 10, 50]"
+                        [paginator]="true" [globalFilterFields]="['name']" responsiveLayout="stack"
+                        [breakpoint]="'1180px'" [tableStyle]="{'min-width': '15rem'}" [showCurrentPageReport]="true"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+                        <ng-template pTemplate="caption">
+                            <div class="flex align-items-center justify-content-between">
+                                <span class="p-input-icon-right">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text" class="w-12rem" [(ngModel)]="searchValue"
+                                        placeholder="Search keyword" (input)="onSearch($event)" />
+                                </span>
+                                <p-button icon="pi pi-refresh" (onClick)="getCustomer()" />
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Debit</th>
+                                <th>Income</th>
+                                <th style="width:10rem">Action</th>
+                            </tr>
+                        </ng-template>
 
-                    <ng-template pTemplate="body" let-customer>
-                        <tr>
-                            <td> <span class="p-column-title">Name</span>{{ customer.name }}</td>
-                            <td> <span class="p-column-title">Email</span>{{ customer.email || "email not updated" }}
-                            </td>
-                            <td> <span class="p-column-title">Debit</span>{{ debit }}</td>
-                            <td> <span class="p-column-title">Income</span>{{ income}}</td>
-                            <td>
-                                <p-button class="mr-2" icon="pi pi-file-edit" severity="warning" pTooltip="edit"
-                                    (onClick)="showEditDialog(customer)" />
-                                <p-button icon="pi pi-expand" pTooltip="expand" (click)="navigateToTransction(customer)" />
-                            </td>
-                        </tr>
-
-                    </ng-template>
-
-                </p-table>
+                        <ng-template pTemplate="body" let-customer>
+                            <tr>
+                                <td class="wrap-content"> <span class="p-column-title">Name</span>{{ customer.name }}
+                                </td>
+                                <td class="wrap-content"> <span class="p-column-title">Email</span>{{ customer.email ||
+                                    "email not updated" }}</td>
+                                <td class="wrap-content"> <span class="p-column-title">Expense</span>{{
+                                    customer.total_expense||0 }}</td>
+                                <td class="wrap-content"> <span class="p-column-title">Income</span>{{
+                                    customer.total_income||0 }}</td>
+                                <td>
+                                    <p-button class="mr-2" icon="pi pi-file-edit" severity="warning" pTooltip="edit"
+                                        (onClick)="showEditDialog(customer)" />
+                                    <p-button icon="pi pi-expand" pTooltip="expand"
+                                        (click)="navigateToTransction(customer)" />
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
             </div>
+
             }
         </div>
     </p-card>

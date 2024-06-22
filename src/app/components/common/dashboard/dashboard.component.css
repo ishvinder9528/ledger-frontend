@@ -1,0 +1,26 @@
+.wrap-content {
+    white-space: normal !important;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.p-column-title {
+    margin-right: 20px; /* Adjust the margin as needed */
+    white-space: nowrap;
+    display: inline-block; /* Ensure it stays inline with the value */
+}
+
+.table-container {
+    overflow-x: auto; /* Allow horizontal scrolling if needed */
+}
+@media (min-width: 756px) {
+    .p-column-title {
+        display: none; /* Hide titles on large screens */
+    }
+}
+
+@media (max-width: 755px) {
+    .p-column-title {
+        display: inline; /* Show titles on small screens */
+    }
+}

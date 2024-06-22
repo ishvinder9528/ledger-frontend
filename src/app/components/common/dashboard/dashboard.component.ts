@@ -63,8 +63,6 @@ export class DashboardComponent {
   ) {}
   @ViewChild('customer') customerTable: Table | undefined;
 
-  debit: number = 0;
-  income: number = 0;
   searchValue: string = '';
   products: any;
   layout: 'list' | 'grid' = 'list';
@@ -87,12 +85,16 @@ export class DashboardComponent {
   ngOnInit() {
     this.getCustomer();
     this.getUser();
+    console.log('D onit user:', this.user);
   }
+
   customerForm = this.fb.group({
     name: ['', [Validators.required]],
     email: ['', [Validators.email]],
     phone: [''],
     gst: [''],
+    income:[''],
+    expense:['']
   });
 
   get name() {
@@ -109,6 +111,15 @@ export class DashboardComponent {
   get gst() {
     return this.customerForm.get('gst');
   }
+
+  get income() {
+    return this.customerForm.get('income');
+  }
+  
+  get expense() {
+    return this.customerForm.get('expense');
+  }
+
   getCustomer() {
     this.customerService.getCustomer(this.headers).subscribe({
       next: (data: any) => {
@@ -126,11 +137,11 @@ export class DashboardComponent {
         .subscribe({
           next: (data: any) => {
             this.customer_data = data.customer;
-            resolve(); // Resolve the Promise once the data is fetched
+            resolve(); 
           },
           error: (error: any) => {
             console.log('some error occured:', error);
-            reject(error); // Reject the Promise if an error occurs
+            reject(error); 
           },
         });
     });
