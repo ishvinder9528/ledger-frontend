@@ -69,7 +69,7 @@ export class TransactionsComponent {
       },
     });
   }
-  creatTransaction(data: any) {
+  createTransaction(data: any) {
     this.transactionService
       .createTransactions(this.id, data, this.headers)
       .subscribe({

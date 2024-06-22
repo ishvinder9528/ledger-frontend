@@ -63,20 +63,17 @@ export class AddTransactionComponent {
     return this.transactionForm.get('date');
   }
 
-  typeOptions = [
-    { name: 'Income'},
-    { name: 'Expense' },
-  ];
+  typeOptions = ['Income', 'Expense'];
+
 
   hideDialog() {
     this.visible = false;
     this.visibleChange.emit(this.visible);
   }
   onSaveTransaction() {
-    console.log(this.transactionForm.value);
-    
-    // this.addTransaction.emit(this.transactionForm.value);
-    // this.hideDialog();
-    // this.transactionForm.reset();
+    console.log(this.transactionForm.value);    
+    this.addTransaction.emit(this.transactionForm.value);
+    this.hideDialog();
+    this.transactionForm.reset();
   }
 }

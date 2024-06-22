@@ -1,65 +1,63 @@
 <div class="mt-2 md:mt-3 p-3">
-
-    <p-card header="{{user.name}} : {{customer.name}}">
-
+    <p-card header="{{ user.name }} : {{ customer.name }}">
         <ul class="list-none p-0 m-0">
             <li class="flex items-center">
                 <span class="text-900 font-medium mr-2">Email:</span>
-                <span class="text-600">{{customer.email}}</span>
+                <span class="text-600">{{ customer.email }}</span>
             </li>
             <li class="flex items-center">
                 <span class="text-900 font-medium mr-2">GST No.:</span>
-                <span class="text-600">{{customer.gst_no || "not updated"}}</span>
+                <span class="text-600">{{ customer.gst_no || 'not updated' }}</span>
             </li>
             <li class="flex items-center">
                 <span class="text-900 font-medium mr-2">Phone No.:</span>
-                <span class="text-600">{{customer.phone_no || 'not updated'}}</span>
+                <span class="text-600">{{ customer.phone_no || 'not updated' }}</span>
             </li>
             <li class="flex items-center mt-2">
-                <span class="ml-3 mr-3 "><p-button icon='pi pi-pen-to-square' [raised]="true"
-                        severity="secondary" /></span>
-                <span class=""><p-button icon='pi pi-trash' [text]="true" [raised]="true" severity="danger" /></span>
-
+                <span class="ml-3 mr-3">
+                    <p-button icon="pi pi-pen-to-square" raised="true" severity="secondary"></p-button>
+                </span>
+                <span>
+                    <p-button icon="pi pi-trash" text="true" raised="true" severity="danger"></p-button>
+                </span>
             </li>
         </ul>
 
-        @if (!transactions || transactions.length==0) {
-        <div class="flex-column justify-content-center text-align-center pt-4" style="text-align: center;">
-            <div>
+        <ng-container *ngIf="!transactions || transactions.length === 0; else transactionsBlock">
+            <div class="flex-column justify-content-center text-align-center pt-4">
                 <h2>Add Transaction First</h2>
+                <p-button label="Add Transaction" raised="true" (onClick)="showAddDialog()"></p-button>
+                <app-add-transaction [(visible)]="addTransactionVisible" [customer]="customer" [user]="user"
+                    (addTransaction)="createTransaction($event)"></app-add-transaction>
             </div>
-
-            <div>
-                <p-button label="Add Transaction" [raised]="true" (onClick)="showAddDialog()" />
+        </ng-container>
+        
+        <ng-template #transactionsBlock>
+            <div class="card mt-5 pt-4">
+                <div class="mb-3">
+                    <p-button label="Add Transaction" raised="true" (onClick)="showAddDialog()"></p-button>
+                    <app-add-transaction [(visible)]="addTransactionVisible" [customer]="customer" [user]="user"
+                        (addTransaction)="createTransaction($event)"></app-add-transaction>
+                </div>
+                <p-table [value]="transactions" [tableStyle]="{ 'min-width': '50rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-transaction>
+                        <tr>
+                            <td><p-tag [value]="transaction.type" [severity]="getSeverity(transaction.type)"></p-tag></td>
+                            <td>{{ transaction.amount }}</td>
+                            <td>{{ transaction.description }}</td>
+                            <td>{{ transaction.date | date: 'dd/MM/yyyy' }}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
             </div>
-            <app-add-transaction [(visible)]="addTransactionVisible" [customer]="customer" [user]="user"
-                (addTransaction)="creatTransaction($event)"></app-add-transaction>
-        </div>
-        }@else {
-        <div class="card mt-5 pt-4">
-            <div class="mb-3">
-                <p-button label="Add Transaction" [raised]="true" />
-            </div>
-            <p-table [value]="transactions" [tableStyle]="{ 'min-width': '50rem' }">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th>Type</th>
-                        <th>Amount</th>
-                        <th>Description</th>
-                        <th>Date</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-transaction>
-                    <tr>
-                        <td><p-tag [value]="transaction.type" [severity]="getSeverity(transaction.type)" /></td>
-                        <td>{{ transaction.amount }}</td>
-                        <td>{{ transaction.description }}</td>
-                        <td>{{ transaction.date | date: 'dd/MM/yyyy'}}</td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
-
-        }
+        </ng-template>
     </p-card>
 </div>
