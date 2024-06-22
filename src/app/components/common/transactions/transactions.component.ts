@@ -13,7 +13,9 @@ import { TableModule } from 'primeng/table';
 import { getToken } from '../../../../environments/environment';
 import { TagModule } from 'primeng/tag';
 import { TransactionService } from '../../../services/transaction/transaction.service';
-
+import { AddTransactionComponent } from './helpers/add-transaction/add-transaction.component';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-transactions',
   standalone: true,
@@ -24,7 +26,10 @@ import { TransactionService } from '../../../services/transaction/transaction.se
     TableModule,
     IconFieldModule,
     HttpClientModule,
-    TagModule
+    TagModule,
+    AddTransactionComponent,
+    BreadcrumbModule,
+    RouterModule,
   ],
   templateUrl: './transactions.component.html',
   styleUrl: './transactions.component.css',
@@ -34,48 +39,65 @@ export class TransactionsComponent {
     const navigation = this.router.getCurrentNavigation();
     this.user = navigation?.extras.state?.['user'];
     this.id = navigation?.extras.state?.['id'];
-    this.data = navigation?.extras.state?.['data'];
+    this.customer = navigation?.extras.state?.['data'];
   }
 
   user: any = '';
   id: any;
-  data: any;
+  customer: any;
+  addTransactionVisible: boolean = false;
   transactions: any = [];
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'X-Token': this.getToken(),
   });
   transactionService: any = new TransactionService(this.http);
-
   ngOnInit() {
     this.getTransactions();
     console.log('tid:', this.id);
     console.log('tuser:', this.user);
-    console.log('data:', this.data);
+    console.log('data:', this.customer);
   }
 
   getTransactions() {
     this.transactionService.getTransactions(this.id, this.headers).subscribe({
       next: (data: any) => {
         this.transactions = data.transactions;
-        console.log('transactions:', this.transactions);
       },
       error: (error: any) => {
         console.log('some error occured:', error);
       },
     });
   }
+  creatTransaction(data: any) {
+    this.transactionService
+      .createTransactions(this.id, data, this.headers)
+      .subscribe({
+        next: (data: any) => {
+          this.transactions = data.transactions;
+          console.log('transactions:', this.transactions);
+          this.getTransactions();
+        },
+        error: (error: any) => {
+          console.log('some error occured:', error);
+        },
+      });
+  }
   getToken() {
     return getToken();
-  }    
+  }
+  showAddDialog() {
+    // this.avatar_image = `https://avatar.iran.liara.run/public?username=${this.user._id}`;
+    this.addTransactionVisible = true;
+  }
   getSeverity(status: string) {
     switch (status) {
-        case 'Income':
-            return 'success';
-        case 'Expense':
-            return 'danger';
-        default:
-          return 'warning'
+      case 'Income':
+        return 'success';
+      case 'Expense':
+        return 'danger';
+      default:
+        return 'warning';
     }
-}
+  }
 }

@@ -16,4 +16,11 @@ export class TransactionService {
       withCredentials: true,
     });
   }
+
+  createTransactions(id: any, data: any, headers: HttpHeaders) {
+    return this.http.post<any>(`${this.url}/trans/create/${id}`,data ,{
+      headers,
+      withCredentials: true,
+    });
+  }
 }

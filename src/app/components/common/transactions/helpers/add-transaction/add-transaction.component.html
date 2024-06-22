@@ -1,1 +1,36 @@
-<p>add-transaction works!</p>
+<p-dialog [(visible)]="visible" header="Header" [draggable]="false" [modal]="true" [style]="{ width: '50rem' }"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" (onHide)="hideDialog()">
+    <ng-template pTemplate="header">
+        <div class="inline-flex align-items-center justify-content-center gap-2">
+            <span class="font-bold white-space-nowrap">
+                {{user?.name || "User"}} : {{customer?.name || "Customer"}}
+            </span>
+        </div>
+    </ng-template>
+    <span class="p-text-secondary block mb-5" style="text-align: left;">Add New Transaction</span>
+    <form [formGroup]="transactionForm">
+        <div class="flex align-items-center gap-5 mb-3">
+            <label for="type" class="font-semibold w-6rem">Type</label>
+            <p-dropdown formControlName="type" [options]="typeOptions" optionLabel="name" placeholder="Transaction Type"
+                class="w-full" [style]="{ width: '100%' }"> </p-dropdown>
+        </div>
+        <div class="flex align-items-center gap-5 mb-5">
+            <label for="amount" class="font-semibold w-6rem">Amount</label>
+            <input pInputText formControlName="amount" id="amount" autocomplete="off" class="w-full" />
+        </div>
+        <div class="flex align-items-center gap-5 mb-5">
+            <label for="description" class="font-semibold w-6rem">Description</label>
+            <textarea pInputTextarea formControlName="description" id="description" rows="5" class="w-full"></textarea>
+        </div>
+        <div class="flex align-items-center gap-5 mb-5">
+            <label for="date" class="font-semibold w-6rem">Date</label>
+            <p-calendar formControlName="date" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay"
+                [showButtonBar]="true" [touchUI]="true" dateFormat="dd/mm/yy" class="w-full"
+                [style]="{ width: '100%' }"></p-calendar>
+        </div>
+    </form>
+    <ng-template pTemplate="footer">
+        <p-button label="Cancel" [text]="true" severity="secondary" (onClick)="hideDialog()"></p-button>
+        <p-button label="Save" [outlined]="true" severity="secondary" (onClick)="onSaveTransaction()"></p-button>
+    </ng-template>
+</p-dialog>

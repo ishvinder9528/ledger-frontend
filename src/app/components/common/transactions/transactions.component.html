@@ -1,19 +1,19 @@
 <div class="mt-2 md:mt-3 p-3">
 
-    <p-card header="{{user.name}} - {{data.name}}">
+    <p-card header="{{user.name}} : {{customer.name}}">
 
         <ul class="list-none p-0 m-0">
             <li class="flex items-center">
                 <span class="text-900 font-medium mr-2">Email:</span>
-                <span class="text-600">{{data.email}}</span>
+                <span class="text-600">{{customer.email}}</span>
             </li>
             <li class="flex items-center">
                 <span class="text-900 font-medium mr-2">GST No.:</span>
-                <span class="text-600">{{data.gst_no || "not updated"}}</span>
+                <span class="text-600">{{customer.gst_no || "not updated"}}</span>
             </li>
             <li class="flex items-center">
                 <span class="text-900 font-medium mr-2">Phone No.:</span>
-                <span class="text-600">{{data.phone_no || 'not updated'}}</span>
+                <span class="text-600">{{customer.phone_no || 'not updated'}}</span>
             </li>
             <li class="flex items-center mt-2">
                 <span class="ml-3 mr-3 "><p-button icon='pi pi-pen-to-square' [raised]="true"
@@ -30,8 +30,10 @@
             </div>
 
             <div>
-                <p-button label="Add Transaction" [raised]="true" />
+                <p-button label="Add Transaction" [raised]="true" (onClick)="showAddDialog()" />
             </div>
+            <app-add-transaction [(visible)]="addTransactionVisible" [customer]="customer" [user]="user"
+                (addTransaction)="creatTransaction($event)"></app-add-transaction>
         </div>
         }@else {
         <div class="card mt-5 pt-4">

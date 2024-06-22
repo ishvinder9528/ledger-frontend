@@ -63,7 +63,8 @@ export class AddCustomersComponent {
   }
 
   onSaveCustomer() {
-    this.saveCustomer.emit(this.customerForm.value as Customer );
+    this.saveCustomer.emit(this.customerForm.value as Customer);
     this.hideDialog();
+    this.customerForm.reset();
   }
 }
