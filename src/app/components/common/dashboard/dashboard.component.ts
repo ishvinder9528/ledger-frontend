@@ -93,8 +93,8 @@ export class DashboardComponent {
     email: ['', [Validators.email]],
     phone: [''],
     gst: [''],
-    income:[''],
-    expense:['']
+    income: [''],
+    expense: [''],
   });
 
   get name() {
@@ -115,7 +115,7 @@ export class DashboardComponent {
   get income() {
     return this.customerForm.get('income');
   }
-  
+
   get expense() {
     return this.customerForm.get('expense');
   }
@@ -137,11 +137,11 @@ export class DashboardComponent {
         .subscribe({
           next: (data: any) => {
             this.customer_data = data.customer;
-            resolve(); 
+            resolve();
           },
           error: (error: any) => {
             console.log('some error occured:', error);
-            reject(error); 
+            reject(error);
           },
         });
     });
@@ -199,7 +199,6 @@ export class DashboardComponent {
   }
   navigateToTransction(customer: any) {
     this.customer_id = customer?._id;
-
     this.getCustomerById()
       .then(() => {
         const data = {
