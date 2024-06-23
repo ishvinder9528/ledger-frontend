@@ -2,31 +2,31 @@
     <p-card header="{{ user.name }} : {{ customer.name }}">
         <div class="grid">
             <div class="lg:col-1"></div>
-            <div class="col-12 md:col-6 lg:col-4" >
+            <div class="col-12 md:col-6 lg:col-4">
                 <p-card >
-                    <ul class="list-none p-0 m-0">
+                    <ul class="list-none p-0 m-0  ">
                         <li class="flex items-center">
-                            <span class="text-900 font-medium mr-2 label-width">Name</span>
-                            <span class="text-600">{{ customer.name }}</span>
+                            <span class=" text-900 font-medium mr-2 label-width">Name</span>
+                            <span class=" text-600 wrap-content">{{ customer.name }}</span>
                         </li>
                         <li class="flex items-center">
-                            <span class="text-900 font-medium mr-2 label-width">Email:</span>
-                            <span class="text-600">{{ customer.email ||'not updated'}}</span>
+                            <span class=" text-900 font-medium mr-2 label-width">Email:</span>
+                            <span class=" text-600 wrap-content">{{ customer.email ||'not updated'}}</span>
                         </li>
                         <li class="flex items-center">
-                            <span class="text-900 font-medium mr-2 label-width">GST No.:</span>
-                            <span class="text-600">{{ customer.gst_no || 'not updated' }}</span>
+                            <span class=" text-900 font-medium mr-2 label-width">GST No.:</span>
+                            <span class=" text-600 wrap-content">{{ customer.gst_no || 'not updated' }}</span>
                         </li>
                         <li class="flex items-center">
-                            <span class="text-900 font-medium mr-2 label-width">Phone No.:</span>
-                            <span class="text-600">{{ customer.phone_no || 'not updated' }}</span>
+                            <span class=" text-900 font-medium mr-2 label-width">Phone No.:</span>
+                            <span class=" text-600 wrap-content mb-1">{{ customer.phone_no || 'not updated' }}</span>
                         </li>
-                        <li class="flex items-center mt-2">
-                            <span class="ml-3 mr-3">
-                                <p-button icon="pi pi-pen-to-square" raised="true" severity="secondary"></p-button>
+                        <li class="flex items-center mt-4 wrap-content justify-content-center md:justify-content-start">
+                            <span class="ml-3 mr-3 ">
+                                <p-button icon="text-2xl pi pi-pen-to-square wrap-content" raised="true" severity="secondary"></p-button>
                             </span>
-                            <span>
-                                <p-button icon="pi pi-trash" text="true" raised="true" severity="danger"></p-button>
+                            <span class="wrap-content">
+                                <p-button icon="text-2xl pi pi-trash wrap-content" text="true" raised="true" severity="danger"></p-button>
                             </span>
                         </li>
                     </ul>
@@ -35,31 +35,35 @@
             <div class=" lg:col-1"></div>
             <div class="col-12 md:col-6 lg:col-5">
                 <p-card header="Final Summary">
-                    <div class="flex flex-column md:flex-row">
-                        <div class="w-full md:w-5 flex align-items-center justify-content-center  ">
-                            <p class="text-4xl md:text-7xl text-green-500">{{income||0}}</p>
-                            <p class="text-600">Total Income</p>
+                    <div class="flex flex-column md:flex-row align-items-center justify-content-between">
+                        <div class="w-full md:w-5 flex flex-column align-items-center justify-content-center">
+                            <p class="text-4xl md:text-7xl text-green-500 m-0">{{income || 0}}</p>
+                            <p class="text-600 mt-1">Total Income</p>
                         </div>
-                        <div class="w-full ">
-                            <p-divider layout="vertical" styleClass="hidden md:flex">
-                                <b>AND</b>
-                            </p-divider>
-                            <p-divider layout="horizontal" styleClass="flex md:hidden" [align]="'center'">
+                        <div class="hidden md:flex align-items-center justify-content-center">
+                            <p-divider layout="vertical" styleClass="flex">
                                 <b>AND</b>
                             </p-divider>
                         </div>
-                        <div class="w-full md:w-5 flex align-items-center justify-content-center  ">
-                            <p class="text-4xl md:text-7xl text-red-500">{{expense||0}}</p>
-                            <p class="text-600">Total Expense</p>
+                        <div class="flex md:hidden align-items-center justify-content-center">
+                            <p-divider layout="horizontal" styleClass="flex" [align]="'center'">
+                                <b>AND</b>
+                            </p-divider>
+                        </div>
+                        <div class="w-full md:w-5 flex flex-column align-items-center justify-content-center">
+                            <p class="text-4xl md:text-7xl text-red-500 m-0">{{expense || 0}}</p>
+                            <p class="text-600 mt-1">Total Expense</p>
                         </div>
                     </div>
                 </p-card>
+                
             </div>
 
         </div>
 
         <ng-container *ngIf="!transactions || transactions.length === 0; else transactionsBlock">
-            <div class="flex-column justify-content-center text-align-center pt-4">
+            <div class="flex-column justify-content-center text-align-center pt-4" style="    align-items: center;
+            display: flex;">
                 <h2>Add Transaction First</h2>
                 <p-button label="Add Transaction" raised="true" (onClick)="showAddDialog()"></p-button>
                 <app-add-transaction [(visible)]="addTransactionVisible" [customer]="customer" [user]="user"
